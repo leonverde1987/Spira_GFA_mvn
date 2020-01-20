@@ -33,7 +33,6 @@ public class TestOne extends stepsOne{
         Datos = this.getDatosFile();
         driver = this.openBrowser(Config.getProperty("Navegador"), Config.getProperty("urlApp"));
         contador = 1;
-        Pasos.clear();
     }
 
     @Test
@@ -76,5 +75,6 @@ public class TestOne extends stepsOne{
     @After
     public void cerrarTest(){
         this.cerrar_Navegador(driver);
+        Pasos.clear();
     }
 }
