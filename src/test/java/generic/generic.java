@@ -64,13 +64,13 @@ public class generic extends evidence {
         try {
             switch(Navegador) {
                 case "Chrome":
-                    System.setProperty("webdriver.chrome.driver", "C:\\ambiente\\selenium_drivers\\chromedriver.exe");
+                    System.setProperty("webdriver.chrome.driver", "selenium_drivers\\chromedriver.exe");
                     driver = new ChromeDriver();
                     driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
                     driver.get(URL);
                     break;
                 case "Firefox":
-                    System.setProperty("webdriver.gecko.driver", "C:\\ambiente\\selenium_drivers\\geckodriver.exe");
+                    System.setProperty("webdriver.gecko.driver", "selenium_drivers\\geckodriver.exe");
                     driver = new FirefoxDriver();
                     driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
                     driver.get(URL);
