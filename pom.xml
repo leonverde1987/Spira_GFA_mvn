@@ -5,7 +5,7 @@
     <artifactId>Spira_Mvn_GFA</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-    <build>
+    <!--build>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -18,11 +18,9 @@
                     </includes>
                   </configuration>
                 </plugin>
-            </plugins>
-            
+            </plugins>   
         </pluginManagement>
-        
-    </build>
+    </build-->
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
