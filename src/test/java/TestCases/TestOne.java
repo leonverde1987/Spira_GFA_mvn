@@ -39,7 +39,6 @@ public class TestOne extends stepsOne{
     @Test
     @SpiraTestCase(testCaseId=6900)
     public void TestBuscarGoogle() throws InterruptedException {
-        
         try{
             //Paso 1
             Pasos.add(contador+".- Abrimos navegador en la URL: "+Config.getProperty("urlApp"));

@@ -3,10 +3,10 @@ package generic;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import junit.framework.Assert;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -94,9 +94,16 @@ public class generic extends evidence {
     /**
      * En este método vamos a validar que estamos en la URL correcta
      * @param driver 
+     * @param findby Es el tipo de selector selenium id, name o XPATH.
+     * @param Elemento Es el selector selenium.
+     * @param msjActual Es el valr del texto que se compara.
      */
-    public void validarEstamosEnURL(WebDriver driver){
-        
+    public void validarEstamosEnURL(WebDriver driver, String findby, String Elemento, String msjActual){
+        try{
+            Assert.assertEquals(this.obtenerTexto(driver, findby, Elemento), msjActual);
+        }catch(Exception e){
+            System.out.println("Mensaje Assert Fail: "+e);
+        }
     }
     
     
@@ -106,7 +113,12 @@ public class generic extends evidence {
     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     */
     
-    
+    /***
+     * El método nos ayuda a dar clic a un elemento.
+     * @param driver es el webDriver en el que se ejecuta la pruebas automatizada.
+     * @param findby Es el tipo de selector selenium id, name o XPATH.
+     * @param Elemento Es el selector selenium que se le va a dar Clic.
+     */
     public void clic_btn(WebDriver driver, String findby, String Elemento){
         switch(findby) {
             case "id":
@@ -121,7 +133,14 @@ public class generic extends evidence {
         }
 
     }
-
+    
+    /***
+     * El método nos ayuda a ingresar texto a un elemento.
+     * @param driver Es el webDriver en el que se ejecuta la pruebas automatizada.
+     * @param findby Es el tipo de selector selenium id, name o XPATH.
+     * @param Elemento Es el selector selenium al que le vamos agregar texto.
+     * @param Texto Es el texto que se va ingresar al campo.
+     */
     public void ingresar_texto(WebDriver driver, String findby, String Elemento, String Texto){
         switch(findby) {
             case "id":
@@ -142,16 +161,43 @@ public class generic extends evidence {
         }
     }
 
+    /***
+     * El método nos ayuda a cerrar un WebDriver.
+     * @param driver Es el webDriver en el que se ejecuta la pruebas automatizada.
+     */
     public void cerrar_driver(WebDriver driver){
             driver.close();
     }
 
-    
-
+    /***
+     * El método le da un tiempo de 10 segundos al webDriver.
+     * @exception InterruptedException Para manejar excepciones con el hilo de procesamiento que se esta deteniendo.
+     */
     public void dormir10seg() throws InterruptedException{
         Thread.sleep(10000);
     }
     
-    
+    /***
+     * El método obtiene el texto de un objeto.
+     * @param driver es el webDriver en el que se ejecuta la pruebas automatizada.
+     * @param findby Es el tipo de selector selenium id, name o XPATH.
+     * @param Elemento Es el selector selenium.
+     * @return Regresa el texto del objeto o un vacio en caso de no encontrar el findby.
+     */
+    public String obtenerTexto(WebDriver driver, String findby, String Elemento){
+        String texto = "";
+        switch(findby) {
+            case "id":
+                texto = driver.findElement(By.id(Elemento)).getText();
+                break;
+            case "name":
+                texto = driver.findElement(By.name(Elemento)).getText();
+                break;
+            case "xpath":
+                texto = driver.findElement(By.xpath(Elemento)).getText();
+                break;
+        }
+        return texto;
+    }
     
 }	
