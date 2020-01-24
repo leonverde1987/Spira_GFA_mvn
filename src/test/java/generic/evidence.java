@@ -24,10 +24,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Attr;
 
 /**
  *
@@ -39,7 +49,7 @@ public class evidence {
         this.crea_Carpeta(rutaEvidencia);
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE); 
         try {
-            FileUtils.copyFile(scrFile, new File(rutaEvidencia+fechaFormato()+"//"+"imagen"+contador+".png"));
+            FileUtils.copyFile(scrFile, new File(rutaEvidencia+"//"+fechaFormato()+"//evidencia"+contador+".png"));
         } catch (IOException ex) {
             Logger.getLogger(evidence.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,7 +79,7 @@ public class evidence {
         // Se crea el documento
         Document documento = new Document(PageSize.A4);
         // Se crea el OutputStream para el fichero donde queremos dejar el pdf.
-        FileOutputStream ficheroPdf = new FileOutputStream("C:\\Evidencia\\ejemplo.pdf");
+        FileOutputStream ficheroPdf = new FileOutputStream("C:\\Evidencia\\"+CasoPrueba+this.fechaFormato()+".pdf");
         // Se asocia el documento al OutputStream y se indica que el espaciado entre
         // lineas sera de 20. Esta llamada debe hacerse antes de abrir el documento
         PdfWriter.getInstance(documento,ficheroPdf).setInitialLeading(20);
@@ -210,7 +220,7 @@ public class evidence {
             documento.add(PasosEvidencia);
             
             Table DatosEvidencia = new Table(1);
-            Image imaEvi = Image.getInstance(rutaEvidencia+"//evidencia"+(a+1)+".png"); 
+            Image imaEvi = Image.getInstance(rutaEvidencia+"\\"+this.fechaFormato()+"\\evidencia"+(a+1)+".png"); 
             Cell celdaImagenEvi = new Cell();
             celdaImagenEvi.setBorder(0);
             celdaImagenEvi.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -224,8 +234,60 @@ public class evidence {
         documento.close();
     }
     
-    public void crearHTML(){
+    public void crearXML(String CasoPrueba, String Resultado, int contador, List<String> Pasos, String rutaEvidencia){
+        try {
+              DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+              DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+              //Elemento raíz
+              org.w3c.dom.Document doc = docBuilder.newDocument();
+              org.w3c.dom.Element suiteCasosPrueba = doc.createElement("SuiteCasosPrueba");
+              doc.appendChild(suiteCasosPrueba);
+              
+              org.w3c.dom.Element casoPrueba = doc.createElement("CasoPrueba");
+              suiteCasosPrueba.appendChild(casoPrueba);
+              //Primer elemento
+              org.w3c.dom.Element nombreTC = doc.createElement("Nombre");
+              casoPrueba.appendChild(nombreTC);
+              nombreTC.setTextContent(CasoPrueba);
+              casoPrueba.appendChild(nombreTC);
+              
+              org.w3c.dom.Element moduloTC = doc.createElement("Módulo");
+              moduloTC.setTextContent("Mantenimiento EAM");
+              casoPrueba.appendChild(moduloTC);
+              
+              org.w3c.dom.Element fechaTC = doc.createElement("Fecha");
+              fechaTC.setTextContent(this.fechaFormato());
+              casoPrueba.appendChild(fechaTC);
+              
+              org.w3c.dom.Element resultadoTC = doc.createElement("Resultado");
+              resultadoTC.setTextContent(Resultado);
+              casoPrueba.appendChild(resultadoTC);
+              
+              org.w3c.dom.Element pasosTC = doc.createElement("PasosTC");
+              resultadoTC.setTextContent(Resultado);
+              casoPrueba.appendChild(pasosTC);
+              
+              for(int a=0; a<contador; a++){
+                  org.w3c.dom.Element steps = doc.createElement("paso");
+                  steps.setTextContent("Paso: "+Pasos.get(a));
+                  steps.setAttribute("ruta", rutaEvidencia+"\\"+this.fechaFormato()+"\\evidencia"+(a+1)+".png");
+                  pasosTC.appendChild(steps);
+              }
+              
+              //Se escribe el contenido del XML en un archivo
+              TransformerFactory transformerFactory = TransformerFactory.newInstance();
+              Transformer transformer = transformerFactory.newTransformer();
+              DOMSource source = new DOMSource(doc);
+              StreamResult result = new StreamResult(new File(rutaEvidencia+"\\"+this.fechaFormato()+"\\"+CasoPrueba+this.fechaFormato()+".xml"));
+              transformer.transform(source, result);
+        } catch (ParserConfigurationException pce) {
+          pce.printStackTrace();
+        } catch (TransformerException tfe) {
+          tfe.printStackTrace();
+        }
         
+        
+
     }
     
 }

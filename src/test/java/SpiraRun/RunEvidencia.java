@@ -24,6 +24,7 @@ public class RunEvidencia extends evidence{
             
             
         this.crearPDF("CP01_EMA_Ejemplo_Evidencia", "Exitoso", 2, Pasos, "C:\\Evidencia");
+        this.crearXML("CP01_EMA_Ejemplo_Evidencia", "Exitoso", 2, Pasos, "C:\\Evidencia");
     }
 
 }
