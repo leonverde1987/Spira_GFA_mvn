@@ -45,8 +45,9 @@ import org.w3c.dom.Attr;
  */
 public class evidence {
     
-    public void capturaDriver(WebDriver driver, String rutaEvidencia, int contador){
+    public void capturaDriver(WebDriver driver, String rutaEvidencia, int contador) throws InterruptedException{
         this.crea_Carpeta(rutaEvidencia);
+        Thread.sleep(3000);
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE); 
         try {
             FileUtils.copyFile(scrFile, new File(rutaEvidencia+"//"+fechaFormato()+"//evidencia"+contador+".png"));
@@ -79,7 +80,7 @@ public class evidence {
         // Se crea el documento
         Document documento = new Document(PageSize.A4);
         // Se crea el OutputStream para el fichero donde queremos dejar el pdf.
-        FileOutputStream ficheroPdf = new FileOutputStream("C:\\Evidencia\\"+CasoPrueba+this.fechaFormato()+".pdf");
+        FileOutputStream ficheroPdf = new FileOutputStream(rutaEvidencia+"//"+fechaFormato()+"\\"+CasoPrueba+this.fechaFormato()+".pdf");
         // Se asocia el documento al OutputStream y se indica que el espaciado entre
         // lineas sera de 20. Esta llamada debe hacerse antes de abrir el documento
         PdfWriter.getInstance(documento,ficheroPdf).setInitialLeading(20);

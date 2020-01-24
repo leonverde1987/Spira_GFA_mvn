@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
+import org.junit.ComparisonFailure;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -26,10 +27,10 @@ public class generic extends evidence {
      * @return El archivo de propiedades con la configuración.
      * @throws FileNotFoundException si no encuentra el archivo en la ruta c:/ambiente/configuracion.
      */
-    public Properties getPropetiesFile() throws FileNotFoundException{
+    public Properties getPropetiesFile(String Archivo) throws FileNotFoundException{
         Properties prop = new Properties();
         try{
-            prop.load(new FileInputStream("configuracion\\configuracion.properties"));
+            prop.load(new FileInputStream(Archivo));
         }catch(IOException e){
             System.out.println("Mensaje Properties: "+ e);
         }
@@ -56,10 +57,9 @@ public class generic extends evidence {
     /**
      * El método regresa un webdriver iniciado para ejecutar pruebas y puede ejecutar Firefox, Chrome, EDGE.
      * @param Navegador Es el tipo de navegador Firefox, Chrome, EDGE.
-     * @param URL Es la URL que va abrir el navegador.
      * @return Manda el WebDriver iniciado
      */    
-    public WebDriver openBrowser(String Navegador, String URL) {
+    public WebDriver openBrowser(String Navegador) {
         WebDriver driver = null;
         try {
             switch(Navegador) {
@@ -67,13 +67,13 @@ public class generic extends evidence {
                     System.setProperty("webdriver.chrome.driver", "selenium_drivers\\chromedriver.exe");
                     driver = new ChromeDriver();
                     driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
-                    driver.get(URL);
+                    
                     break;
                 case "Firefox":
                     System.setProperty("webdriver.gecko.driver", "selenium_drivers\\geckodriver.exe");
                     driver = new FirefoxDriver();
                     driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
-                    driver.get(URL);
+                    
                     break;
             }
             driver.manage().window().maximize();
@@ -94,16 +94,19 @@ public class generic extends evidence {
     /**
      * En este método vamos a validar que estamos en la URL correcta
      * @param driver 
-     * @param findby Es el tipo de selector selenium id, name o XPATH.
-     * @param Elemento Es el selector selenium.
      * @param msjActual Es el valr del texto que se compara.
      */
-    public void validarEstamosEnURL(WebDriver driver, String findby, String Elemento, String msjActual){
+    public String AssertMsjElemento(WebDriver driver, String msjActual){
+        String msj = "";
         try{
-            Assert.assertEquals(this.obtenerTexto(driver, findby, Elemento), msjActual);
-        }catch(Exception e){
+            Assert.assertEquals(driver.getTitle(), msjActual);
+            msj = "Exitoso";
+        }catch(ComparisonFailure e){
             System.out.println("Mensaje Assert Fail: "+e);
+            msj = "Fallido: "+e;
         }
+        
+        return msj;
     }
     
     
@@ -175,6 +178,15 @@ public class generic extends evidence {
      */
     public void dormir10seg() throws InterruptedException{
         Thread.sleep(10000);
+    }
+    
+    /***
+     * El método le da un tiempo de 10 segundos al webDriver.
+     * 
+     * @exception InterruptedException Para manejar excepciones con el hilo de procesamiento que se esta deteniendo.
+     */
+    public void abrirURl(WebDriver driver, String URL) throws InterruptedException{
+        driver.get(URL);
     }
     
     /***

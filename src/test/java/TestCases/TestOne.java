@@ -27,21 +27,22 @@ import steps.stepsOne;
 public class TestOne extends stepsOne{
     public Properties Config = null;
     public Properties Datos = null;
+    public Properties Elementos = null;
     public WebDriver driver = null;
     public List<String> Pasos = new ArrayList<String>();
     public int contador = 0;
-    public String Resultado = "";
+    public String Resultado = "Exitoso";
     public String Escenario = "";
     public String RutaEvidencia = "";
 
     @Before
     public void PrepararEjecucion() throws FileNotFoundException{
-        Config = this.getPropetiesFile();
-        Datos = this.getDatosFile();
+        Config = this.getPropetiesFile("configuracion\\configuracion.properties");
+        Datos = this.getPropetiesFile("configuracion\\datos.properties");
+        Elementos = this.getPropetiesFile("configuracion\\pageOne.properties");
         contador = 1;
-        driver = this.openBrowser(Config.getProperty("Navegador"), Config.getProperty("urlApp"));
-        
-        RutaEvidencia = this.getPropetiesFile().getProperty("rutaEvidencia");
+        driver = this.openBrowser(Config.getProperty("Navegador"));
+        RutaEvidencia = Config.getProperty("rutaEvidencia");
     }
 
     @Test
@@ -49,21 +50,27 @@ public class TestOne extends stepsOne{
     public void TestBuscarGoogle() throws InterruptedException, DocumentException, BadElementException, IOException {
         try{
             Escenario = "CP01_EMA_Ejemplo_Evidencia";
+            
             //Paso 1
+            this.ingresar_A_URL(driver, contador, Config);
             Pasos.add(contador+".- Abrimos navegador en la URL: "+Config.getProperty("urlApp"));
+            
             //Paso 2
-            this.ingresar_contenido(driver, Datos.getProperty("texto"), contador++);
-            Pasos.add(contador+".- Agregamos el contenido para buscar en google"+Datos.getProperty("texto"));
-            //paso 3
-            this.dormir10seg();
             contador++;
-            Pasos.add(contador+".- Esperamos 10 segundos.");
+            this.ingresar_contenido(driver, Datos.getProperty("texto"), contador, Config, Elementos);
+            Pasos.add(contador+".- Agregamos el contenido para buscar en google"+Datos.getProperty("texto"));
+            
+            //paso 3
+            contador++;
+            Pasos.add(contador+".- Validamos la busqueda en Google.");
+            Resultado = this.validarTitlePagina(driver, Datos, Config, contador);
+            
             
         }catch(NoSuchElementException s){
-            Resultado = "No se encontró el elemento: "+s;
+            Resultado = "Ejecución Fallida, No se encontró el elemento: "+s;
             System.out.println(Resultado);
         }catch(InterruptedException e){
-            Resultado = "No se ejecutó correctamente el script: "+e;
+            Resultado = "Ejecución Fallida: "+e;
             System.out.println(Resultado);
         }finally{
             System.out.println("Lista: "+Pasos);
@@ -78,15 +85,24 @@ public class TestOne extends stepsOne{
     @SpiraTestCase(testCaseId=7010)
     public void TestBuscarGoogle2() throws InterruptedException, DocumentException, BadElementException, IOException {
         try{
+            Escenario = "CP02_EMA_Ejemplo_Evidencia";
+            
             //Paso 1
+            this.ingresar_A_URL(driver, contador, Config);
             Pasos.add(contador+".- Abrimos navegador en la URL: "+Config.getProperty("urlApp"));
+            
             //Paso 2
-            this.ingresar_contenido(driver, Datos.getProperty("texto2"), contador++);
-            Pasos.add(contador+".- Agregamos el contenido para buscar en google: "+Datos.getProperty("texto2"));
-            //paso 3
-            this.dormir10seg();
             contador++;
-            Pasos.add(contador+".- Esperamos 10 segundos.");
+            this.ingresar_contenido(driver, Datos.getProperty("texto2"), contador, Config, Elementos);
+            Pasos.add(contador+".- Agregamos el contenido para buscar en google: "+Datos.getProperty("texto2"));
+            
+            //paso 3
+            contador++;
+            Pasos.add(contador+".- Validamos la busqueda en Google.");
+            this.validarTitlePagina(driver, Datos, Config, contador);
+            
+            
+            
             
         }catch(NoSuchElementException s){
             System.out.println("No se encontró el elemento: "+s);
@@ -96,7 +112,7 @@ public class TestOne extends stepsOne{
             System.out.println("Lista: "+Pasos);
             //Generamos PDF
             this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia);
-            //Generamos PDF
+            //Generamos XML
             this.crearXML(Escenario, Resultado, contador, Pasos, RutaEvidencia);
         }
     }
@@ -105,15 +121,23 @@ public class TestOne extends stepsOne{
     @SpiraTestCase(testCaseId=7011)
     public void TestBuscarGoogle3() throws InterruptedException, DocumentException, BadElementException, IOException {
         try{
+            
+            Escenario = "CP03_EMA_Ejemplo_Evidencia";
+            
             //Paso 1
+            this.ingresar_A_URL(driver, contador, Config);
             Pasos.add(contador+".- Abrimos navegador en la URL: "+Config.getProperty("urlApp"));
+            
             //Paso 2
-            this.ingresar_contenido(driver, Datos.getProperty("texto3"), contador++);
-            Pasos.add(contador+".- Agregamos el contenido para buscar en google"+Datos.getProperty("texto3"));
-            //paso 3
-            this.dormir10seg();
             contador++;
-            Pasos.add(contador+".- Esperamos 10 segundos.");
+            this.ingresar_contenido(driver, Datos.getProperty("texto3"), contador, Config, Elementos);
+            Pasos.add(contador+".- Agregamos el contenido para buscar en google"+Datos.getProperty("texto3"));
+            
+            //paso 3
+            contador++;
+            Pasos.add(contador+".- Validamos la busqueda en Google.");
+            this.validarTitlePagina(driver, Datos, Config, contador);
+            
             
         }catch(NoSuchElementException s){
             System.out.println("No se encontró el elemento: "+s);
