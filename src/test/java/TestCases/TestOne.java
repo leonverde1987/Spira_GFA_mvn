@@ -43,6 +43,7 @@ public class TestOne extends stepsOne{
         contador = 1;
         driver = this.openBrowser(Config.getProperty("Navegador"));
         RutaEvidencia = Config.getProperty("rutaEvidencia");
+        Resultado = "";
     }
 
     @Test
@@ -67,7 +68,7 @@ public class TestOne extends stepsOne{
             
             
         }catch(NoSuchElementException s){
-            Resultado = "Ejecución Fallida, No se encontró el elemento: "+s;
+            Resultado = "Ejecución Fallida, No se encontró elemento: "+s;
             System.out.println(Resultado);
         }catch(InterruptedException e){
             Resultado = "Ejecución Fallida: "+e;
@@ -99,15 +100,17 @@ public class TestOne extends stepsOne{
             //paso 3
             contador++;
             Pasos.add(contador+".- Validamos la busqueda en Google.");
-            this.validarTitlePagina(driver, Datos, Config, contador);
+            Resultado = this.validarTitlePagina(driver, Datos, Config, contador);
             
             
             
             
         }catch(NoSuchElementException s){
-            System.out.println("No se encontró el elemento: "+s);
+            Resultado = "Ejecución Fallida, No se encontró elemento: "+s;
+            System.out.println(Resultado);
         }catch(InterruptedException e){
-            System.out.println("No se ejecutó correctamente el script: "+e);
+            Resultado = "Ejecución Fallida: "+e;
+            System.out.println(Resultado);
         }finally{
             System.out.println("Lista: "+Pasos);
             //Generamos PDF
@@ -136,13 +139,15 @@ public class TestOne extends stepsOne{
             //paso 3
             contador++;
             Pasos.add(contador+".- Validamos la busqueda en Google.");
-            this.validarTitlePagina(driver, Datos, Config, contador);
+            Resultado = this.validarTitlePagina(driver, Datos, Config, contador);
             
             
         }catch(NoSuchElementException s){
-            System.out.println("No se encontró el elemento: "+s);
+            Resultado = "Ejecución Fallida, No se encontró elemento: "+s;
+            System.out.println(Resultado);
         }catch(InterruptedException e){
-            System.out.println("No se ejecutó correctamente el script: "+e);
+            Resultado = "Ejecución Fallida: "+e;
+            System.out.println(Resultado);
         }finally{
             System.out.println("Lista: "+Pasos);
             //Generamos PDF

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import generic.generic;
 import java.io.FileNotFoundException;
 import java.util.Properties;
+import org.junit.ComparisonFailure;
 
 public class stepsOne extends generic{
     
@@ -23,7 +24,12 @@ public class stepsOne extends generic{
     }
 	
     public String validarTitlePagina(WebDriver driver, Properties Datos, Properties Config, int contador) throws InterruptedException{
-        String msj = this.AssertMsjElemento(driver, Datos.getProperty("mensaje"));
+        String msj = "";
+        try{
+            msj = this.AssertMsjElemento(driver, Datos.getProperty("mensaje"));
+        }catch(ComparisonFailure e){
+            msj = "Fallido, Resultado Esperado: "+e;
+        }
         this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), contador);
         return msj;
     }

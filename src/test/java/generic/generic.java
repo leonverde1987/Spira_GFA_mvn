@@ -101,9 +101,9 @@ public class generic extends evidence {
         try{
             Assert.assertEquals(driver.getTitle(), msjActual);
             msj = "Exitoso";
-        }catch(ComparisonFailure e){
+        }catch(AssertionError e){
             System.out.println("Mensaje Assert Fail: "+e);
-            msj = "Fallido: "+e;
+            msj = "Fallido, Reusltado Esperado: "+e;
         }
         
         return msj;
