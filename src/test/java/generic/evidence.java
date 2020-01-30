@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -37,8 +36,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Attr;
-
+import j2html.TagCreator.*;
 /**
  *
  * @author TestingIT
@@ -73,7 +71,7 @@ public class evidence {
         return d.format(fecha);
     }
     
-    public void crearPDF(String CasoPrueba, String Resultado, int contador, List<String> Pasos, String rutaEvidencia) throws FileNotFoundException, DocumentException, BadElementException, IOException{
+    public void crearPDF(String CasoPrueba, String Resultado, int contador, List<String> Pasos, String rutaEvidencia, String modulo, String version) throws FileNotFoundException, DocumentException, BadElementException, IOException{
         
 
         
@@ -191,7 +189,7 @@ public class evidence {
         if("Exitoso".equals(Resultado)){
             parrafo5 = new Paragraph(Resultado, fuenteVerde);
         }
-        if("Fallido".equals(Resultado)){
+        if("Fallido".equals(Resultado.substring(0, 7))){
             parrafo5 = new Paragraph(Resultado, fuenteRojo);
         }
         if("Ejecución Fallida".equals(Resultado)){
@@ -210,8 +208,12 @@ public class evidence {
         
         for(int a=0; a<contador; a++){
             Table PasosEvidencia = new Table(1);
-            
-            Paragraph parrafo6 = new Paragraph("Paso: "+Pasos.get(a)); 
+            Paragraph parrafo6 = null;
+            try{
+            parrafo6 = new Paragraph("Paso: "+Pasos.get(a));
+            }catch(Exception e){
+                parrafo6 = new Paragraph("Paso: Sin Registro");
+            }
             Cell celda6 = new Cell();
             celda6.setBorder(0);
             celda6.add(parrafo6);
@@ -286,9 +288,206 @@ public class evidence {
         } catch (TransformerException tfe) {
           tfe.printStackTrace();
         }
-        
-        
+    }
+    
+    public void crearHTML(String CasoPrueba, String Resultado, int contador, List<String> Pasos, String rutaEvidencia, String modulo, String version) throws IOException{
+        FileWriter filewriter = null;
+        PrintWriter printw = null;
 
+        try{
+            filewriter = new FileWriter(rutaEvidencia+"\\"+this.fechaFormato()+"\\Evidencia_"+CasoPrueba+".html");//declarar el archivo
+            printw = new PrintWriter(filewriter);//declarar un impresor
+
+            printw.println("<html>");
+            printw.println("<head><title>Reporte de Evidencia</title>");
+            
+            printw.println("<style>");
+                printw.println(".accordion {");
+                  printw.println("background-color: #eee;");
+                  printw.println("color: #444;");
+                  printw.println("cursor: pointer;");
+                  printw.println("padding: 18px;");
+                  printw.println("width: 100%;");
+                  printw.println("border: none;");
+                  printw.println("-align: left;");
+                  printw.println("outline: none;");
+                  printw.println("font-size: 15px;");
+                  printw.println("transition: 0.4s;");
+                printw.println("}");
+
+                printw.println(".active, .accordion:hover {");
+                  printw.println("background-color: #ccc;");
+                printw.println("}");
+
+                printw.println(".accordion:after {");
+                  printw.println("content: '\002B';");
+                  printw.println("color: #777;");
+                  printw.println("font-weight: bold;");
+                  printw.println("float: right;");
+                  printw.println("margin-left: 5px;");
+                printw.println("}");
+
+                printw.println(".active:after {");
+                  printw.println("content: \"\2212\";");
+                printw.println("}");
+
+                printw.println(".panel {");
+                  printw.println("padding: 0 18px;");
+                  printw.println("background-color: white;");
+                  printw.println("max-height: 0;");
+                  printw.println("overflow: hidden;");
+                  printw.println("transition: max-height 0.2s ease-out;");
+                printw.println("}");
+                
+                printw.println(".btn {");
+                  printw.println("border: none; /* Remove borders */");
+                  printw.println("color: white; /* Add a text color */");
+                  printw.println("padding: 14px 28px; /* Add some padding */");
+                  printw.println("cursor: pointer; /* Add a pointer cursor on mouse-over */");
+                printw.println("}");
+
+                printw.println(".success {background-color: #4CAF50;} /* Green */");
+                printw.println(".success:hover {background-color: #46a049;}");
+
+                printw.println(".info {background-color: #2196F3;} /* Blue */");
+                printw.println(".info:hover {background: #0b7dda;}");
+
+                printw.println(".warning {background-color: #ff9800;} /* Orange */");
+                printw.println(".warning:hover {background: #e68a00;}");
+
+                printw.println(".danger {background-color: #f44336;} /* Red */");
+                printw.println(".danger:hover {background: #da190b;}");
+
+                printw.println("#contenido { width: 1200px; margin: 0 auto; }");
+                printw.println("#encabezado { width: 1200px; margin: 0 auto; background-color: #2196F3; color: #FF0000;}");
+                
+                printw.println("#titulo {color: white;}");
+                
+                printw.println("</style>");
+                    
+            printw.println("</head>");    
+            //si queremos escribir una comilla " en el
+            //archivo uzamos la diagonal invertida \"
+            printw.println("<body>");
+
+            //si quisieramos escribir una cadena que vide de una lista o
+            //de una variable lo concatenamos
+            //podemos añadir imagenes con codigo html
+            printw.println("<div id=\"contenido\">");
+            printw.println("<table id=\"encabezado\">");
+            printw.println("<tr>");
+            printw.println("<td>");
+            printw.println("<img src=\""+rutaEvidencia+"\\gfa.jpg\" width=\"200\" height=\"100\">");
+            printw.println("</td>");
+            printw.println("<td>");
+            printw.println("</td>");
+            printw.println("<td>");
+            //printw.println("<center><img src=\""+rutaEvidencia+"\\testingit.png\" width=\"250\" height=\"100\"></center>");
+            printw.println("</td>");
+            printw.println("</tr>");
+            
+//            printw.println("<tr height=\"50\">");
+//            printw.println("</tr>");
+            
+            printw.println("<tr><center>");
+            printw.println("<td colspan=\"3\">");
+                printw.println("<center><table >");
+                printw.println("<tr>");
+                printw.println("<td colspan=\"2\">");
+                printw.println("<h1 class=\"titulo\">Reporte de Evidencia Pruebas Automatizadas</h1>");
+                printw.println("</td>");
+                printw.println("</tr>");
+                printw.println("<tr>");
+                printw.println("<td>");
+                printw.println("<h3 class=\"titulo\">Fecha de Ejecución: </h3>");
+                printw.println("</td>");
+                printw.println("<td>");
+                printw.println("<h3 class=\"titulo\">"+this.fechaFormato()+"</h3>");
+                printw.println("</td>");
+                printw.println("</tr>");
+                printw.println("<tr>");
+                printw.println("<td>");
+                printw.println("<h3 class=\"titulo\">Módulo: </h3>");
+                printw.println("</td>");
+                printw.println("<td>");
+                printw.println("<h3 class=\"titulo\">"+modulo+"</h3>");
+                printw.println("</td>");
+                printw.println("</tr>");
+                printw.println("<tr>");
+                printw.println("<td>");
+                printw.println("<h3 class=\"titulo\">Versión: </h3>");
+                printw.println("</td>");
+                printw.println("<td>");
+                printw.println("<h3 class=\"titulo\">"+version+"<h3 class=\"titulo\">");
+                printw.println("</td>");
+                printw.println("</tr>");
+                printw.println("<tr>");
+                printw.println("<td>");
+                printw.println("<h3 class=\"titulo\">Caso de Prueba: </h3>");
+                printw.println("</td>");
+                printw.println("<td>");
+                printw.println("<h3 class=\"titulo\">"+CasoPrueba+"</h3>");
+                printw.println("</td>");
+                printw.println("</tr>");
+                printw.println("<tr>");
+                printw.println("<td>");
+                printw.println("<h3 class=\"titulo\">Resultado: </h3>");
+                printw.println("</td>");
+                printw.println("<td>");
+                System.out.println(Resultado.substring(0, 7));
+                if("Fallido".equals(Resultado.substring(0, 7))){
+                    printw.println("<button class=\"btn danger\">"+Resultado.substring(0, 7)+"</button>");
+                }
+                if("Exitoso".equals(Resultado.substring(0, 7))){
+                    printw.println("<button class=\"btn success\">"+Resultado.substring(0, 7)+"</button>");
+                    printw.println("<h3 class=\\\"titulo\\\">"+Resultado+"</h3>");
+                }
+                printw.println("</td>");
+                printw.println("</tr>");
+                printw.println("</table><center>");
+            printw.println("</td>");
+            printw.println("</center></tr>");
+            printw.println("</tr>");
+            printw.println("<tr height=\"50\">");
+            printw.println("</tr>");
+            printw.println("</table>");
+            for(int a=0; a<contador; a++){
+              
+                printw.println("<button class=\"accordion\">"+Pasos.get(a)+"</button>");
+                printw.println("<div class=\"panel\">");
+                printw.println("<p><center><img src=\""+rutaEvidencia+"\\"+this.fechaFormato()+"\\evidencia"+(a+1)+".png\"></center></p>");
+                printw.println("</div>");
+            }
+            
+            printw.println("</div>");
+            
+            printw.println("<script>");
+            printw.println("var acc = document.getElementsByClassName(\"accordion\");");
+            printw.println("var i;");
+
+            printw.println("for (i = 0; i < acc.length; i++) {");
+              printw.println("acc[i].addEventListener(\"click\", function() {");
+                printw.println("this.classList.toggle(\"active\");");
+                printw.println("var panel = this.nextElementSibling;");
+                printw.println("if (panel.style.maxHeight) {");
+                  printw.println("panel.style.maxHeight = null;");
+                printw.println("} else {");
+                  printw.println("panel.style.maxHeight = panel.scrollHeight + \"px\";");
+                printw.println("} ");
+              printw.println("});");
+            printw.println("}");
+            printw.println("</script>");
+            
+            printw.println("</body>");
+            printw.println("</html>");
+
+            //no devemos olvidar cerrar el archivo para que su lectura sea correcta
+            printw.close();//cerramos el archivo
+
+            System.out.println("Generado exitosamente");//si todo sale bien mostramos un mensaje de guardado exitoso
+           }catch(IOException e){
+               System.out.println("Error: "+e);
+           }
     }
     
 }

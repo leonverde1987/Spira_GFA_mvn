@@ -53,13 +53,14 @@ public class TestOne extends stepsOne{
             Escenario = "CP01_EMA_Ejemplo_Evidencia";
             
             //Paso 1
-            this.ingresar_A_URL(driver, contador, Config);
             Pasos.add(contador+".- Abrimos navegador en la URL: "+Config.getProperty("urlApp"));
+            this.ingresar_A_URL(driver, contador, Config);
             
             //Paso 2
             contador++;
-            this.ingresar_contenido(driver, Datos.getProperty("texto"), contador, Config, Elementos);
             Pasos.add(contador+".- Agregamos el contenido para buscar en google"+Datos.getProperty("texto"));
+            this.ingresar_contenido(driver, Datos.getProperty("texto"), contador, Config, Elementos);
+            
             
             //paso 3
             contador++;
@@ -69,16 +70,20 @@ public class TestOne extends stepsOne{
             
         }catch(NoSuchElementException s){
             Resultado = "Ejecución Fallida, No se encontró elemento: "+s;
+            this.capturarEvidencia(driver, Config, contador);
             System.out.println(Resultado);
         }catch(InterruptedException e){
             Resultado = "Ejecución Fallida: "+e;
+            this.capturarEvidencia(driver, Config, contador);
             System.out.println(Resultado);
         }finally{
             System.out.println("Lista: "+Pasos);
             //Generamos PDF
-            this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia);
+            this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
             //Generamos PDF
             this.crearXML(Escenario, Resultado, contador, Pasos, RutaEvidencia);
+            //Generamos HTML
+            this.crearHTML(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
         }
     }
     
@@ -89,13 +94,13 @@ public class TestOne extends stepsOne{
             Escenario = "CP02_EMA_Ejemplo_Evidencia";
             
             //Paso 1
-            this.ingresar_A_URL(driver, contador, Config);
             Pasos.add(contador+".- Abrimos navegador en la URL: "+Config.getProperty("urlApp"));
+            this.ingresar_A_URL(driver, contador, Config);
             
             //Paso 2
             contador++;
-            this.ingresar_contenido(driver, Datos.getProperty("texto2"), contador, Config, Elementos);
             Pasos.add(contador+".- Agregamos el contenido para buscar en google: "+Datos.getProperty("texto2"));
+            this.ingresar_contenido(driver, Datos.getProperty("texto2"), contador, Config, Elementos);
             
             //paso 3
             contador++;
@@ -107,16 +112,20 @@ public class TestOne extends stepsOne{
             
         }catch(NoSuchElementException s){
             Resultado = "Ejecución Fallida, No se encontró elemento: "+s;
+            this.capturarEvidencia(driver, Config, contador);
             System.out.println(Resultado);
         }catch(InterruptedException e){
             Resultado = "Ejecución Fallida: "+e;
+            this.capturarEvidencia(driver, Config, contador);
             System.out.println(Resultado);
         }finally{
             System.out.println("Lista: "+Pasos);
             //Generamos PDF
-            this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia);
+            this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
             //Generamos XML
             this.crearXML(Escenario, Resultado, contador, Pasos, RutaEvidencia);
+            //Generamos HTML
+            this.crearHTML(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
         }
     }
     
@@ -128,13 +137,14 @@ public class TestOne extends stepsOne{
             Escenario = "CP03_EMA_Ejemplo_Evidencia";
             
             //Paso 1
-            this.ingresar_A_URL(driver, contador, Config);
             Pasos.add(contador+".- Abrimos navegador en la URL: "+Config.getProperty("urlApp"));
+            this.ingresar_A_URL(driver, contador, Config);
+            
             
             //Paso 2
             contador++;
-            this.ingresar_contenido(driver, Datos.getProperty("texto3"), contador, Config, Elementos);
             Pasos.add(contador+".- Agregamos el contenido para buscar en google"+Datos.getProperty("texto3"));
+            this.ingresar_contenido(driver, Datos.getProperty("texto3"), contador, Config, Elementos);
             
             //paso 3
             contador++;
@@ -144,16 +154,20 @@ public class TestOne extends stepsOne{
             
         }catch(NoSuchElementException s){
             Resultado = "Ejecución Fallida, No se encontró elemento: "+s;
+            this.capturarEvidencia(driver, Config, contador);
             System.out.println(Resultado);
         }catch(InterruptedException e){
             Resultado = "Ejecución Fallida: "+e;
+            this.capturarEvidencia(driver, Config, contador);
             System.out.println(Resultado);
         }finally{
             System.out.println("Lista: "+Pasos);
             //Generamos PDF
-            this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia);
+            this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
             //Generamos PDF
             this.crearXML(Escenario, Resultado, contador, Pasos, RutaEvidencia);
+            //Generamos HTML
+            this.crearHTML(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
         }
     }
 

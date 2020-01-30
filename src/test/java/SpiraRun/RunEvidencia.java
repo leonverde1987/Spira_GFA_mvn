@@ -23,8 +23,10 @@ public class RunEvidencia extends evidence{
         Pasos.add("2.- Buscamos GFA.");
             
             
-        this.crearPDF("CP01_EMA_Ejemplo_Evidencia", "Exitoso", 2, Pasos, "C:\\Evidencia");
-        this.crearXML("CP01_EMA_Ejemplo_Evidencia", "Exitoso", 2, Pasos, "C:\\Evidencia");
+        //this.crearPDF("CP01_EMA_Ejemplo_Evidencia", "Exitoso", 2, Pasos, "C:\\Evidencia");
+        //this.crearXML("CP01_EMA_Ejemplo_Evidencia", "Exitoso", 2, Pasos, "C:\\Evidencia");
+        this.crearHTML("CP01_EMA_Ejemplo_Evidencia", "Exitoso", 2, Pasos, "C:\\Evidencia", "Mantenimiento EAM", "5.12.3");
+        this.crearHTML("CP02_EMA_Ejemplo_Evidencia", "Fallido", 2, Pasos, "C:\\Evidencia", "Mantenimiento EAM", "5.12.3");
     }
 
 }

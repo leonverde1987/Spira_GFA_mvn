@@ -38,21 +38,7 @@ public class generic extends evidence {
         
     }
     
-    /***
-     * En este método abrimos el properties de datos para la ejecución de los scripts debe estar en la ruta c:/ambiente/configuracion/configuracion.properties.
-     * @return El archivo de propiedades con los datos de los test.
-     * @throws FileNotFoundException si no encuentra el archivo en la ruta c:/ambiente/configuracion/datos.properties.
-     */
-    public Properties getDatosFile() throws FileNotFoundException{
-        Properties prop = new Properties();
-        try{
-            prop.load(new FileInputStream("configuracion\\datos.properties"));
-        }catch(IOException e){
-            System.out.println("Mensaje Datos: "+ e);
-        }
-        return prop;
-        
-    }
+    
     
     /**
      * El método regresa un webdriver iniciado para ejecutar pruebas y puede ejecutar Firefox, Chrome, EDGE.

@@ -33,5 +33,18 @@ public class stepsOne extends generic{
         this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), contador);
         return msj;
     }
-	
+    
+    public void capturarEvidencia(WebDriver driver, Properties Config, int error) throws InterruptedException{
+        
+        switch(error) {
+            case 1:
+                this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), error);
+                
+                break;
+            case 2:
+                this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), error);
+                
+                break;
+        }
+    }
 }
