@@ -72,9 +72,7 @@ public class evidence {
     }
     
     public void crearPDF(String CasoPrueba, String Resultado, int contador, List<String> Pasos, String rutaEvidencia, String modulo, String version) throws FileNotFoundException, DocumentException, BadElementException, IOException{
-        
 
-        
         // Se crea el documento
         Document documento = new Document(PageSize.A4);
         // Se crea el OutputStream para el fichero donde queremos dejar el pdf.
@@ -106,7 +104,7 @@ public class evidence {
         fuenteRojo.setSize(12);
         
         Font fuenteAzul= new Font();
-        fuenteAzul.setColor(Color.BLUE);
+        fuenteAzul.setColor(Color.ORANGE);
         fuenteAzul.setStyle(Font.BOLD);
         fuenteAzul.setSize(12);
         
@@ -192,8 +190,10 @@ public class evidence {
         if("Fallido".equals(Resultado.substring(0, 7))){
             parrafo5 = new Paragraph(Resultado, fuenteRojo);
         }
-        if("Ejecución Fallida".equals(Resultado)){
-            parrafo5 = new Paragraph(Resultado, fuenteAzul);
+        if(Resultado.length()>10){
+            if("Ejecución Fallida".equals(Resultado.substring(0, 17))){
+                parrafo5 = new Paragraph(Resultado, fuenteAzul);
+            }
         }
         parrafo5.add(Chunk.NEWLINE);
         parrafo5.add(Chunk.NEWLINE);
@@ -410,15 +410,7 @@ public class evidence {
                 printw.println("<h3 class=\"titulo\">Módulo: </h3>");
                 printw.println("</td>");
                 printw.println("<td>");
-                printw.println("<h3 class=\"titulo\">"+modulo+"</h3>");
-                printw.println("</td>");
-                printw.println("</tr>");
-                printw.println("<tr>");
-                printw.println("<td>");
-                printw.println("<h3 class=\"titulo\">Versión: </h3>");
-                printw.println("</td>");
-                printw.println("<td>");
-                printw.println("<h3 class=\"titulo\">"+version+"<h3 class=\"titulo\">");
+                printw.println("<h3 class=\"titulo\">"+modulo+version+"</h3>");
                 printw.println("</td>");
                 printw.println("</tr>");
                 printw.println("<tr>");
@@ -435,22 +427,51 @@ public class evidence {
                 printw.println("</td>");
                 printw.println("<td>");
                 System.out.println(Resultado.substring(0, 7));
+                int detalle=0;
                 if("Fallido".equals(Resultado.substring(0, 7))){
                     printw.println("<button class=\"btn danger\">"+Resultado.substring(0, 7)+"</button>");
+                    detalle++;
+                    
                 }
                 if("Exitoso".equals(Resultado.substring(0, 7))){
                     printw.println("<button class=\"btn success\">"+Resultado.substring(0, 7)+"</button>");
-                    printw.println("<h3 class=\\\"titulo\\\">"+Resultado+"</h3>");
+                    
                 }
+                if(Resultado.length()>10){
+                    if("Ejecución Fallida".equals(Resultado.substring(0, 17))){
+                        printw.println("<button class=\"btn warning\">"+Resultado.substring(0, 17)+"</button>");
+                        detalle++;
+                    }
+                }
+                
                 printw.println("</td>");
                 printw.println("</tr>");
                 printw.println("</table><center>");
             printw.println("</td>");
             printw.println("</center></tr>");
             printw.println("</tr>");
-            printw.println("<tr height=\"50\">");
+            printw.println("<tr height=\"25\">");
             printw.println("</tr>");
             printw.println("</table>");
+            
+            if(detalle>0){
+                
+                printw.println("<table>");
+                printw.println("<tr>");
+                printw.println("<td>");
+                printw.println("<h2 class=\"titulo\">Detalle de la Ejecución: </h2>");
+                printw.println("</td>");
+                printw.println("</tr>");
+                printw.println("<tr>");
+                printw.println("<td>");
+                printw.println("<h4 class=\"titulo\">"+Resultado+"</h4>");
+                printw.println("</td>");
+                printw.println("</tr>");
+                printw.println("<tr height=\"25\">");
+                printw.println("</tr>");
+                printw.println("</table>");
+            }
+            printw.println("<h2 class=\"titulo\">Pasos de Ejecución: </h2>");
             for(int a=0; a<contador; a++){
               
                 printw.println("<button class=\"accordion\">"+Pasos.get(a)+"</button>");
