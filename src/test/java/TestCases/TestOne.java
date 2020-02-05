@@ -48,7 +48,7 @@ public class TestOne extends stepsOne{
 
     @Test
     @SpiraTestCase(testCaseId=6900)
-    public void TestBuscarGoogle() throws InterruptedException, DocumentException, BadElementException, IOException {
+    public void TestBuscarGoogle() throws InterruptedException, DocumentException, BadElementException, IOException, Exception {
         try{
             Escenario = "CP01_EMA_Ejemplo_Evidencia";
             
@@ -77,19 +77,13 @@ public class TestOne extends stepsOne{
             this.capturarEvidencia(driver, Config, contador);
             System.out.println(Resultado);
         }finally{
-            System.out.println("Lista: "+Pasos);
-            //Generamos PDF
-            this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
-            //Generamos PDF
-            this.crearXML(Escenario, Resultado, contador, Pasos, RutaEvidencia);
-            //Generamos HTML
-            this.crearHTML(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
+            this.finalizarTestCase(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
         }
     }
     
     @Test
     @SpiraTestCase(testCaseId=7010)
-    public void TestBuscarGoogle2() throws InterruptedException, DocumentException, BadElementException, IOException {
+    public void TestBuscarGoogle2() throws InterruptedException, DocumentException, BadElementException, IOException, Exception {
         try{
             Escenario = "CP02_EMA_Ejemplo_Evidencia";
             
@@ -119,19 +113,13 @@ public class TestOne extends stepsOne{
             this.capturarEvidencia(driver, Config, contador);
             System.out.println(Resultado);
         }finally{
-            System.out.println("Lista: "+Pasos);
-            //Generamos PDF
-            this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
-            //Generamos XML
-            this.crearXML(Escenario, Resultado, contador, Pasos, RutaEvidencia);
-            //Generamos HTML
-            this.crearHTML(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
+            this.finalizarTestCase(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
         }
     }
     
     @Test
     @SpiraTestCase(testCaseId=7011)
-    public void TestBuscarGoogle3() throws InterruptedException, DocumentException, BadElementException, IOException {
+    public void TestBuscarGoogle3() throws InterruptedException, DocumentException, BadElementException, IOException, Exception {
         try{
             
             Escenario = "CP03_EMA_Ejemplo_Evidencia";
@@ -161,13 +149,7 @@ public class TestOne extends stepsOne{
             this.capturarEvidencia(driver, Config, contador);
             System.out.println(Resultado);
         }finally{
-            System.out.println("Lista: "+Pasos);
-            //Generamos PDF
-            this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
-            //Generamos PDF
-            this.crearXML(Escenario, Resultado, contador, Pasos, RutaEvidencia);
-            //Generamos HTML
-            this.crearHTML(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
+            this.finalizarTestCase(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
         }
     }
 

@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 
 import generic.generic;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Properties;
 import org.junit.ComparisonFailure;
 
@@ -46,5 +47,19 @@ public class stepsOne extends generic{
                 
                 break;
         }
+    }
+    
+    public void finalizarTestCase(String Escenario, String Resultado, int contador, List<String> Pasos, String RutaEvidencia, String Modulo, String Version) throws Exception{
+        System.out.println("Lista: "+Pasos);
+            //Generamos PDF
+            this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia, Modulo, Version);
+            //Generamos PDF
+            this.crearXML(Escenario, Resultado, contador, Pasos, RutaEvidencia);
+            //Generamos HTML
+            this.crearHTML(Escenario, Resultado, contador, Pasos, RutaEvidencia, Modulo, Version);
+        
+            if("Fallido".equals(Resultado.substring(0, 7))){
+                throw new Exception(Resultado);
+            }
     }
 }
