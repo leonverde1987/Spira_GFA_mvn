@@ -9,30 +9,56 @@ import java.util.Properties;
 import org.junit.ComparisonFailure;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class stepsOne extends generic{
+public class stepsOneGrid extends generic{
     
-    public void ingresar_A_URL(WebDriver driver, int contador, Properties Config, String Escenario) throws FileNotFoundException, InterruptedException {
+    /**
+     * 
+     * @param driver
+     * @param contador
+     * @param Config
+     * @param Escenario
+     * @throws FileNotFoundException
+     * @throws InterruptedException 
+     */
+    public void ingresar_A_URL(RemoteWebDriver driver, int contador, Properties Config, String Escenario) throws FileNotFoundException, InterruptedException {
         this.abrirURl(driver, Config.getProperty("urlApp"));
         this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), contador, Escenario);
     }
     
-    
-    
-    public void ingresar_contenido(WebDriver driver, String textoBuscar, int contador, Properties Config, Properties Elementos, String Escenario) throws FileNotFoundException, InterruptedException {
+    /**
+     * 
+     * @param driver
+     * @param textoBuscar
+     * @param contador
+     * @param Config
+     * @param Elementos
+     * @param Escenario
+     * @throws FileNotFoundException
+     * @throws InterruptedException 
+     */
+    public void ingresar_contenido(RemoteWebDriver driver, String textoBuscar, int contador, Properties Config, Properties Elementos, String Escenario) throws FileNotFoundException, InterruptedException {
         this.ingresar_texto(driver, "xpath", Elementos.getProperty("txtBuscarGoogle"), textoBuscar);
         this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), contador, Escenario);
     }
     
-    public void ingresar_contenido_fail(WebDriver driver, String textoBuscar, int contador, Properties Config, Properties Elementos, String Escenario) throws FileNotFoundException, InterruptedException {
-        this.ingresar_texto(driver, "xpath", Elementos.getProperty("txtBuscarGooglefail"), textoBuscar);
-        this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), contador, Escenario);
-    }
-    
-    public void cerrar_Navegador(WebDriver driver) {
+    /**
+     * 
+     * @param driver 
+     */
+    public void cerrar_Navegador(RemoteWebDriver driver) {
         this.cerrar_driver(driver);
     }
-	
-    public String validarTitlePagina(WebDriver driver, Properties Datos, Properties Config, int contador, String Escenario) throws InterruptedException{
+    /**
+     * 
+     * @param driver
+     * @param Datos
+     * @param Config
+     * @param contador
+     * @param Escenario
+     * @return
+     * @throws InterruptedException 
+     */
+    public String validarTitlePagina(RemoteWebDriver driver, Properties Datos, Properties Config, int contador, String Escenario) throws InterruptedException{
         String msj = "";
         try{
             msj = this.AssertMsjElemento(driver, Datos.getProperty("mensaje"));
@@ -43,18 +69,15 @@ public class stepsOne extends generic{
         return msj;
     }
     
-    public String validarTitlePaginafail(WebDriver driver, Properties Datos, Properties Config, int contador, String Escenario) throws InterruptedException{
-        String msj = "";
-        try{
-            msj = this.AssertMsjElemento(driver, Datos.getProperty("mensaje"));
-        }catch(ComparisonFailure e){
-            msj = "Fallido, Resultado Esperado: "+e;
-        }
-        this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), contador, Escenario);
-        return msj;
-    }
-    
-    public void capturarEvidencia(WebDriver driver, Properties Config, int error, String Escenario) throws InterruptedException{
+    /**
+     * 
+     * @param driver
+     * @param Config
+     * @param error
+     * @param Escenario
+     * @throws InterruptedException 
+     */
+    public void capturarEvidencia(RemoteWebDriver driver, Properties Config, int error, String Escenario) throws InterruptedException{
         
         switch(error) {
             case 1:
@@ -68,6 +91,17 @@ public class stepsOne extends generic{
         }
     }
     
+    /**
+     * 
+     * @param Escenario
+     * @param Resultado
+     * @param contador
+     * @param Pasos
+     * @param RutaEvidencia
+     * @param Modulo
+     * @param Version
+     * @throws Exception 
+     */
     public void finalizarTestCase(String Escenario, String Resultado, int contador, List<String> Pasos, String RutaEvidencia, String Modulo, String Version) throws Exception{
         System.out.println("Lista: "+Pasos);
         //Generamos PDF
@@ -82,10 +116,20 @@ public class stepsOne extends generic{
         }
     }
     
+    /**
+     * 
+     * @param Config
+     * @throws InterruptedException
+     * @throws FileNotFoundException 
+     */
     public void ejecucionGrid(Properties Config) throws InterruptedException, FileNotFoundException{
         this.leventarNodosGrid();
     }
     
+    /**
+     * 
+     * @throws InterruptedException 
+     */
     public void finEjecucionGrid() throws InterruptedException{
         this.cierraNodosGrid();
     }

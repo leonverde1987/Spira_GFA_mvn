@@ -29,7 +29,7 @@ public class RunEvidencia extends generic{
         //this.crearHTML("CP01_EMA_Ejemplo_Evidencia", "Exitoso", 2, Pasos, "C:\\Evidencia", "Mantenimiento EAM", "5.12.3");
         //this.crearHTML("CP02_EMA_Ejemplo_Evidencia", "Fallido", 2, Pasos, "C:\\Evidencia", "Mantenimiento EAM", "5.12.3");
         
-        this.leventarNodosGrid(this.getPropetiesFile("configuracion\\configuracion.properties"));
+        this.leventarNodosGrid();
         Thread.sleep(5000);
         this.cierraNodosGrid();
     }

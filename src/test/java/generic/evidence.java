@@ -36,26 +36,25 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import j2html.TagCreator.*;
 /**
  *
  * @author TestingIT
  */
 public class evidence {
     
-    public void capturaDriver(WebDriver driver, String rutaEvidencia, int contador) throws InterruptedException{
-        this.crea_Carpeta(rutaEvidencia);
+    public void capturaDriver(WebDriver driver, String rutaEvidencia, int contador, String cp) throws InterruptedException{
+        this.crea_Carpeta(rutaEvidencia, cp);
         Thread.sleep(3000);
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE); 
         try {
-            FileUtils.copyFile(scrFile, new File(rutaEvidencia+"//"+fechaFormato()+"//evidencia"+contador+".png"));
+            FileUtils.copyFile(scrFile, new File(rutaEvidencia+"//"+fechaFormato()+"//"+cp+"//evidencia"+contador+".png"));
         } catch (IOException ex) {
             Logger.getLogger(evidence.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void crea_Carpeta(String rutaEvidencia){
-        File directorio = new File(rutaEvidencia+"//"+fechaFormato());
+    public void crea_Carpeta(String rutaEvidencia, String cp){
+        File directorio = new File(rutaEvidencia+"//"+fechaFormato()+"//"+cp);
         if (!directorio.exists()) {
             if (directorio.mkdirs()) {
                 System.out.println("Directorio creado");
@@ -82,7 +81,7 @@ public class evidence {
         // Se crea el documento
         Document documento = new Document(PageSize.A4);
         // Se crea el OutputStream para el fichero donde queremos dejar el pdf.
-        FileOutputStream ficheroPdf = new FileOutputStream(rutaEvidencia+"//"+fechaFormato()+"\\"+CasoPrueba+this.fechaFormato()+".pdf");
+        FileOutputStream ficheroPdf = new FileOutputStream(rutaEvidencia+"//"+fechaFormato()+"\\"+CasoPrueba+"\\"+CasoPrueba+this.fechaFormato()+".pdf");
         // Se asocia el documento al OutputStream y se indica que el espaciado entre
         // lineas sera de 20. Esta llamada debe hacerse antes de abrir el documento
         PdfWriter.getInstance(documento,ficheroPdf).setInitialLeading(20);
@@ -229,7 +228,7 @@ public class evidence {
             documento.add(PasosEvidencia);
             
             Table DatosEvidencia = new Table(1);
-            Image imaEvi = Image.getInstance(rutaEvidencia+"\\"+this.fechaFormato()+"\\evidencia"+(a+1)+".png"); 
+            Image imaEvi = Image.getInstance(rutaEvidencia+"\\"+this.fechaFormato()+"\\"+CasoPrueba+"\\evidencia"+(a+1)+".png"); 
             Cell celdaImagenEvi = new Cell();
             celdaImagenEvi.setBorder(0);
             celdaImagenEvi.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -279,7 +278,7 @@ public class evidence {
               for(int a=0; a<contador; a++){
                   org.w3c.dom.Element steps = doc.createElement("paso");
                   steps.setTextContent("Paso: "+Pasos.get(a));
-                  steps.setAttribute("ruta", rutaEvidencia+"\\"+this.fechaFormato()+"\\evidencia"+(a+1)+".png");
+                  steps.setAttribute("ruta", rutaEvidencia+"\\"+this.fechaFormato()+"\\"+CasoPrueba+"\\evidencia"+(a+1)+".png");
                   pasosTC.appendChild(steps);
               }
               
@@ -287,7 +286,7 @@ public class evidence {
               TransformerFactory transformerFactory = TransformerFactory.newInstance();
               Transformer transformer = transformerFactory.newTransformer();
               DOMSource source = new DOMSource(doc);
-              StreamResult result = new StreamResult(new File(rutaEvidencia+"\\"+this.fechaFormato()+"\\"+CasoPrueba+this.fechaFormato()+".xml"));
+              StreamResult result = new StreamResult(new File(rutaEvidencia+"\\"+this.fechaFormato()+"\\"+CasoPrueba+"\\"+CasoPrueba+this.fechaFormato()+".xml"));
               transformer.transform(source, result);
         } catch (ParserConfigurationException pce) {
           pce.printStackTrace();
@@ -301,7 +300,7 @@ public class evidence {
         PrintWriter printw = null;
 
         try{
-            filewriter = new FileWriter(rutaEvidencia+"\\"+this.fechaFormato()+"\\Evidencia_"+CasoPrueba+".html");//declarar el archivo
+            filewriter = new FileWriter(rutaEvidencia+"\\"+this.fechaFormato()+"\\"+CasoPrueba+"\\Evidencia_"+CasoPrueba+".html");//declarar el archivo
             printw = new PrintWriter(filewriter);//declarar un impresor
 
             printw.println("<html>");
@@ -383,12 +382,12 @@ public class evidence {
             printw.println("<table id=\"encabezado\">");
             printw.println("<tr>");
             printw.println("<td>");
-            printw.println("<img src=\""+rutaEvidencia+"\\gfa.jpg\" width=\"200\" height=\"100\">");
+            printw.println("<img src=\""+rutaEvidencia+"\\gfa.png\" width=\"215\" height=\"60\">");
             printw.println("</td>");
             printw.println("<td>");
             printw.println("</td>");
             printw.println("<td>");
-            //printw.println("<center><img src=\""+rutaEvidencia+"\\testingit.png\" width=\"250\" height=\"100\"></center>");
+            printw.println("<p align=\"right\"><img src=\""+rutaEvidencia+"\\testingit.png\" width=\"215\" height=\"60\"></p>");
             printw.println("</td>");
             printw.println("</tr>");
             
@@ -482,7 +481,7 @@ public class evidence {
               
                 printw.println("<button class=\"accordion\">"+Pasos.get(a)+"</button>");
                 printw.println("<div class=\"panel\">");
-                printw.println("<p><center><img src=\""+rutaEvidencia+"\\"+this.fechaFormato()+"\\evidencia"+(a+1)+".png\"></center></p>");
+                printw.println("<p><center><img src=\""+rutaEvidencia+"\\"+this.fechaFormato()+"\\"+CasoPrueba+"\\evidencia"+(a+1)+".png\"></center></p>");
                 printw.println("</div>");
             }
             

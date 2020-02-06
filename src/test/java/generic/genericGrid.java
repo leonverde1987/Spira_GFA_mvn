@@ -20,7 +20,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class generic extends evidence {
+public class genericGrid extends evidence {
     
     /*
     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -139,7 +139,7 @@ public class generic extends evidence {
      * @param driver 
      * @param msjActual Es el valr del texto que se compara.
      */
-    public String AssertMsjElemento(WebDriver driver, String msjActual){
+    public String AssertMsjElemento(RemoteWebDriver driver, String msjActual){
         String msj = "";
         try{
             Assert.assertEquals(driver.getTitle(), msjActual);
@@ -165,7 +165,7 @@ public class generic extends evidence {
      * @param findby Es el tipo de selector selenium id, name o XPATH.
      * @param Elemento Es el selector selenium que se le va a dar Clic.
      */
-    public void clic_btn(WebDriver driver, String findby, String Elemento){
+    public void clic_btn(RemoteWebDriver driver, String findby, String Elemento){
         switch(findby) {
             case "id":
                 driver.findElement(By.id(Elemento)).click();
@@ -187,7 +187,7 @@ public class generic extends evidence {
      * @param Elemento Es el selector selenium al que le vamos agregar texto.
      * @param Texto Es el texto que se va ingresar al campo.
      */
-    public void ingresar_texto(WebDriver driver, String findby, String Elemento, String Texto){
+    public void ingresar_texto(RemoteWebDriver driver, String findby, String Elemento, String Texto){
         switch(findby) {
             case "id":
                 driver.findElement(By.id(Elemento)).clear();
@@ -228,7 +228,7 @@ public class generic extends evidence {
      * 
      * @exception InterruptedException Para manejar excepciones con el hilo de procesamiento que se esta deteniendo.
      */
-    public void abrirURl(WebDriver driver, String URL) throws InterruptedException{
+    public void abrirURl(RemoteWebDriver driver, String URL) throws InterruptedException{
         driver.get(URL);
     }
     
