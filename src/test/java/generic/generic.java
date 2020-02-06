@@ -4,15 +4,20 @@ package generic;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
 import org.junit.ComparisonFailure;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class generic extends evidence {
     
@@ -69,6 +74,56 @@ public class generic extends evidence {
 
         }
         return driver;
+    }
+    
+    public RemoteWebDriver openGridBrowser(String navegador, Properties config) throws MalformedURLException{
+        RemoteWebDriver driver = null;
+        DesiredCapabilities capa = new DesiredCapabilities();
+        //capa.setCapability("platformName", "iOS");
+        capa.setPlatform(Platform.WINDOWS);
+        capa.setBrowserName(navegador);
+        driver = new RemoteWebDriver(new URL("http://"+config.getProperty("ipHub")+":"+config.getProperty("hubPort")+"/grid/register"), capa);
+        return driver;
+    }
+    
+    public void leventarNodosGrid(Properties Config) throws InterruptedException{
+        try {
+            String cmd = "cmd /c start cmd.exe /K java -jar "+Config.getProperty("seleniumServer")+" -role hub -port "+Config.getProperty("hubPort");
+            Runtime.getRuntime().exec(cmd); 
+        } catch (IOException ioe) {
+            System.out.println ("Hub: "+ioe);
+        }
+        Thread.sleep(5000);
+        try {
+            String cmd = "cmd /c start cmd.exe /K java -Dwebdriver.gecko.driver="+Config.getProperty("gecko")+" -jar "+Config.getProperty("seleniumServer")+" -role webdriver -hub http://"+Config.getProperty("ipHub")+":"+Config.getProperty("hubPort")+"/grid/register -port "+Config.getProperty("geckoPort");
+            Runtime.getRuntime().exec(cmd); 
+        } catch (IOException ioe) {
+            System.out.println ("Gecko node: "+ioe);
+        }
+        Thread.sleep(5000);
+        try {
+            String cmd = "cmd /c start cmd.exe /K java -Dwebdriver.chrome.driver="+Config.getProperty("chrome")+" -jar "+Config.getProperty("seleniumServer")+" -role webdriver -hub http://"+Config.getProperty("ipHub")+":"+Config.getProperty("hubPort")+"/grid/register -port "+Config.getProperty("chromePort");
+            Runtime.getRuntime().exec(cmd); 
+        } catch (IOException ioe) {
+            System.out.println ("Chrome node: "+ioe);
+        }
+        Thread.sleep(5000);
+        try {
+            String cmd = "cmd /c start cmd.exe /K java -Dwebdriver.edge.driver="+Config.getProperty("edge")+" -jar "+Config.getProperty("seleniumServer")+" -role webdriver -hub http://"+Config.getProperty("ipHub")+":"+Config.getProperty("hubPort")+"/grid/register -port "+Config.getProperty("edgePort");
+            Runtime.getRuntime().exec(cmd); 
+        } catch (IOException ioe) {
+            System.out.println ("Edege node: "+ioe);
+        } 
+    }
+    
+    public void cierraNodosGrid(){
+        try {
+            String cmd = "cmd /c start cmd.exe /K TASKKILL /F /IM cmd.exe /T";
+            Runtime.getRuntime().exec(cmd); 
+        } catch (IOException ioe) {
+            System.out.println ("Edege node: "+ioe);
+        }
+        
     }
     
     /*

@@ -71,6 +71,12 @@ public class evidence {
         return d.format(fecha);
     }
     
+    public String MinSeg(){
+        SimpleDateFormat d = new SimpleDateFormat("dd-MM-yy");
+        Date fecha = new Date();
+        return d.format(fecha);
+    }
+    
     public void crearPDF(String CasoPrueba, String Resultado, int contador, List<String> Pasos, String rutaEvidencia, String modulo, String version) throws FileNotFoundException, DocumentException, BadElementException, IOException{
 
         // Se crea el documento
