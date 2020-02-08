@@ -40,7 +40,7 @@ import javax.xml.transform.stream.StreamResult;
  *
  * @author TestingIT
  */
-public class evidence {
+public class evidenceGrid {
     
     public void capturaDriver(WebDriver driver, String rutaEvidencia, int contador, String cp) throws InterruptedException{
         this.crea_Carpeta(rutaEvidencia, cp);
@@ -49,7 +49,7 @@ public class evidence {
         try {
             FileUtils.copyFile(scrFile, new File(rutaEvidencia+"//"+fechaFormato()+"//"+cp.substring(0, 3)+"//"+cp+"//evidencia"+contador+".png"));
         } catch (IOException ex) {
-            Logger.getLogger(evidence.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(evidenceGrid.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

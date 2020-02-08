@@ -22,19 +22,19 @@ import steps.stepsOneGrid;
 
 @SpiraTestConfiguration(
 	    url="https://testing-it.spiraservice.net",
-	    login="laguilar",
+	    login="automationQA",
 	    password="test1234", 
 	    projectId=67,
 	    testSetId=73
 	)
 
-public class TestOneGrid extends stepsOneGrid{
+public class TestOneGrid extends stepsOne{
     public Properties Config = null;
     public Properties Datos = null;
     public Properties Elementos = null;
     public RemoteWebDriver driverFX = null;
     public RemoteWebDriver driverCH = null;
-    public RemoteWebDriver driverED = null;
+    public WebDriver driverED = null;
     public List<String> Pasos = new ArrayList<String>();
     public int contador = 0;
     public String Resultado = "";

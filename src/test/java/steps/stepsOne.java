@@ -80,6 +80,11 @@ public class stepsOne extends generic{
         if("Fallido".equals(Resultado.substring(0, 7))){
             throw new Exception(Resultado);
         }
+        if(Resultado.length()>10){
+            if("Ejecución Fallida".equals(Resultado.substring(0, 17))){
+                throw new Exception(Resultado);
+            }
+        }
     }
     
     public void ejecucionGrid(Properties Config) throws InterruptedException, FileNotFoundException{

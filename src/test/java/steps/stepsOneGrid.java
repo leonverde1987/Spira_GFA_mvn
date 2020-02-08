@@ -3,13 +3,14 @@ package steps;
 import org.openqa.selenium.WebDriver;
 
 import generic.generic;
+import generic.genericGrid;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Properties;
 import org.junit.ComparisonFailure;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class stepsOneGrid extends generic{
+public class stepsOneGrid extends genericGrid{
     
     /**
      * 
@@ -21,8 +22,13 @@ public class stepsOneGrid extends generic{
      * @throws InterruptedException 
      */
     public void ingresar_A_URL(RemoteWebDriver driver, int contador, Properties Config, String Escenario) throws FileNotFoundException, InterruptedException {
-        this.abrirURl(driver, Config.getProperty("urlApp"));
-        this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), contador, Escenario);
+        try{
+            this.abrirURl(driver, Config.getProperty("urlApp"));
+            this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), contador, Escenario);
+        }catch(InterruptedException e){
+            System.out.println("Mensaje: "+e);
+        }
+        
     }
     
     /**

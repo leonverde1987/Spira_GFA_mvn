@@ -20,7 +20,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class genericGrid extends evidence {
+public class genericGrid extends evidenceGrid {
     
     /*
     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -228,8 +228,12 @@ public class genericGrid extends evidence {
      * 
      * @exception InterruptedException Para manejar excepciones con el hilo de procesamiento que se esta deteniendo.
      */
-    public void abrirURl(RemoteWebDriver driver, String URL) throws InterruptedException{
-        driver.get(URL);
+    public void abrirURl(RemoteWebDriver driver, String URL){
+        try{
+            driver.get(URL);
+        }catch(Exception e){
+            System.out.println("Mensaje: "+e);
+        }
     }
     
     /***

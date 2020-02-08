@@ -18,7 +18,7 @@ import steps.stepsOne;
 
 @SpiraTestConfiguration(
 	    url="https://testing-it.spiraservice.net",
-	    login="laguilar",
+	    login="automationQA",
 	    password="test1234", 
 	    projectId=67,
 	    testSetId=73
@@ -50,7 +50,7 @@ public class TestOne extends stepsOne{
     @SpiraTestCase(testCaseId=6900)
     public void TestBuscarGoogle() throws InterruptedException, DocumentException, BadElementException, IOException, Exception {
         try{
-            Escenario = "CP01_EMA_Ejemplo_Evidencia";
+            Escenario = "ASM_Alta de activos_Alta manual de un activo manual_Perfil Contador Activos";
             
             //Paso 1
             Pasos.add(contador+".- Abrimos navegador en la URL: "+Config.getProperty("urlApp"));
@@ -76,6 +76,10 @@ public class TestOne extends stepsOne{
             Resultado = "Ejecución Fallida: "+e;
             this.capturarEvidencia(driver, Config, contador, Escenario);
             System.out.println(Resultado);
+        }catch(Exception e){
+            Resultado = "Ejecución Fallida: "+e;
+            this.capturarEvidencia(driver, Config, contador, Escenario);
+            System.out.println(Resultado);
         }finally{
             this.finalizarTestCase(Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"));
         }
@@ -85,7 +89,7 @@ public class TestOne extends stepsOne{
     @SpiraTestCase(testCaseId=7010)
     public void TestBuscarGoogle2() throws InterruptedException, DocumentException, BadElementException, IOException, Exception {
         try{
-            Escenario = "CP02_EMA_Ejemplo_Evidencia";
+            Escenario = "EAM_Alta de centros trabajo_Alta manual de un centro trabajo_Perfil Administrador Mantto";
             
             //Paso 1
             Pasos.add(contador+".- Abrimos navegador en la URL: "+Config.getProperty("urlApp"));
@@ -100,9 +104,6 @@ public class TestOne extends stepsOne{
             contador++;
             Pasos.add(contador+".- Validamos la busqueda en Google.");
             Resultado = this.validarTitlePagina(driver, Datos, Config, contador, Escenario);
-            
-            
-            
             
         }catch(NoSuchElementException s){
             Resultado = "Ejecución Fallida, No se encontró elemento: "+s;
@@ -122,12 +123,11 @@ public class TestOne extends stepsOne{
     public void TestBuscarGoogle3() throws InterruptedException, DocumentException, BadElementException, IOException, Exception {
         try{
             
-            Escenario = "CP03_EMA_Ejemplo_Evidencia";
+            Escenario = "AP_Alta cuenta_Alta manual de una cuenta por pagar_Perfil Contador Cuentas Pagar";
             
             //Paso 1
             Pasos.add(contador+".- Abrimos navegador en la URL: "+Config.getProperty("urlApp"));
             this.ingresar_A_URL(driver, contador, Config, Escenario);
-            
             
             //Paso 2
             contador++;
@@ -138,7 +138,6 @@ public class TestOne extends stepsOne{
             contador++;
             Pasos.add(contador+".- Validamos la busqueda en Google.");
             Resultado = this.validarTitlePagina(driver, Datos, Config, contador, Escenario);
-            
             
         }catch(NoSuchElementException s){
             Resultado = "Ejecución Fallida, No se encontró elemento: "+s;

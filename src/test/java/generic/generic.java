@@ -77,8 +77,8 @@ public class generic extends evidence {
         return driver;
     }
     
-    public RemoteWebDriver openGridBrowser(String navegador, Properties config) throws MalformedURLException, InterruptedException{
-        RemoteWebDriver driver = null;
+    public WebDriver openGridBrowser(String navegador, Properties config) throws MalformedURLException, InterruptedException{
+        WebDriver driver = null;
         DesiredCapabilities capa = new DesiredCapabilities();
         //capa.setCapability("platformName", Platform.WINDOWS);
         capa.setPlatform(Platform.WINDOWS);
@@ -229,7 +229,11 @@ public class generic extends evidence {
      * @exception InterruptedException Para manejar excepciones con el hilo de procesamiento que se esta deteniendo.
      */
     public void abrirURl(WebDriver driver, String URL) throws InterruptedException{
+        try{
         driver.get(URL);
+        }catch(Exception e){
+            System.out.println("Mensaje: "+e);
+        }
     }
     
     /***
