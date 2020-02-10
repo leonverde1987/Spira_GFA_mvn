@@ -21,7 +21,7 @@ import steps.stepsOne;
 	    login="automationQA",
 	    password="test1234", 
 	    projectId=67,
-	    testSetId=73
+	    testSetId=88
 	)
 
 public class TestOne extends stepsOne{
@@ -86,7 +86,7 @@ public class TestOne extends stepsOne{
     }
     
     @Test
-    @SpiraTestCase(testCaseId=7010)
+    @SpiraTestCase(testCaseId=6906)
     public void TestBuscarGoogle2() throws InterruptedException, DocumentException, BadElementException, IOException, Exception {
         try{
             Escenario = "EAM_Alta de centros trabajo_Alta manual de un centro trabajo_Perfil Administrador Mantto";

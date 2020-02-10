@@ -13,10 +13,8 @@ import java.util.List;
 import java.util.Properties;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
 import steps.stepsOne;
 import steps.stepsOneGrid;
 

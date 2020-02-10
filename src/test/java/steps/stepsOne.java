@@ -17,6 +17,7 @@ public class stepsOne extends generic{
     }
     
     
+    
     public void ingresar_contenido(WebDriver driver, String textoBuscar, int contador, Properties Config, Properties Elementos, String Escenario) throws FileNotFoundException, InterruptedException {
         this.ingresar_texto(driver, "xpath", Elementos.getProperty("txtBuscarGoogle"), textoBuscar);
         this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), contador, Escenario);

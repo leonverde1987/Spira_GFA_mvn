@@ -16,7 +16,6 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -30,8 +29,9 @@ public class generic extends evidence {
     
     /***
      * En este método abrimos el properties de configuración del proyecto debe estar en la ruta c:/ambiente/configuracion.
-     * @return El archivo de propiedades con la configuración.
-     * @throws FileNotFoundException si no encuentra el archivo en la ruta c:/ambiente/configuracion.
+     * @param Archivo Es la ruta del archivo properties que se necesita leer.
+     * @return El archivo de propiedades.
+     * @throws FileNotFoundException Cacha la excepción si no encuentra el archivo en la ruta c:/ambiente/configuracion.
      */
     public Properties getPropetiesFile(String Archivo) throws FileNotFoundException{
         Properties prop = new Properties();
@@ -123,6 +123,9 @@ public class generic extends evidence {
         } 
     }
     
+    /***
+     * Esté método nos ayuda a cerrar los nod
+     */
     public void cierraNodosGrid(){
         try {
             String cmd = "cmd /c start cmd.exe /K TASKKILL /F /IM cmd.exe /T";
