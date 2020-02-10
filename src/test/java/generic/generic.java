@@ -87,6 +87,11 @@ public class generic extends evidence {
         return driver;
     }
     
+    /**
+     * El metódo nos ayuda a levantar los nodos grid de selenium
+     * @throws InterruptedException Controla cualquier excepción en la ejecución
+     * @throws FileNotFoundException Controla que el archivo no exista
+     */
     public void leventarNodosGrid() throws InterruptedException, FileNotFoundException{
         Properties Config = this.getPropetiesFile("configuracion\\configuracion.properties");
         try {
